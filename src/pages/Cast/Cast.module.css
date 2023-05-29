@@ -1,0 +1,21 @@
+.castList {
+  display: flex;
+  list-style: none;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.castItem {
+  width: calc(100% / 5);
+  text-align: center;
+}
+
+.cardText {
+  margin: 2px auto;
+}
+
+.castImg {
+  display: block;
+  margin: 0px auto;
+}

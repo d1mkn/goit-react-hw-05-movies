@@ -1,19 +1,30 @@
+import { useEffect, useState } from 'react';
 import { getTrendingMovies } from 'services/movieAPI';
 import MoviesList from 'components/MoviesList/MoviesList';
-import { useEffect, useState } from 'react';
+import Status from 'services/status';
+import { useLocation } from 'react-router-dom';
 
 const MainPage = () => {
   const [trendingMovies, setTrendingMovies] = useState([]);
+  const [status, setState] = useState(Status.IDLE);
+  const location = useLocation();
 
   useEffect(() => {
-    getTrendingMovies().then(response => setTrendingMovies(response.results));
-  });
+    setState(Status.PENDING);
+    getTrendingMovies().then(response => {
+      setTrendingMovies(response.results);
+      setState(Status.RESOLVED);
+    });
+  }, []);
 
   return (
-    <main>
+    <>
       <h1>Tranding today</h1>
-      <MoviesList data={trendingMovies} />
-    </main>
+      {status === Status.PENDING && <div>Loading...</div>}
+      {status === Status.RESOLVED && (
+        <MoviesList data={trendingMovies} location={location} />
+      )}
+    </>
   );
 };
 

@@ -1,0 +1,9 @@
+.reviewList {
+  list-style: none;
+}
+
+.reviewItem {
+  margin-bottom: 10px;
+  padding: 0px 10px;
+  border: 1px solid black;
+}

@@ -1,0 +1,10 @@
+.navList {
+  display: flex;
+  margin-bottom: 30px;
+  gap: 15px;
+  list-style: none;
+}
+
+main {
+  padding: 0px 40px;
+}

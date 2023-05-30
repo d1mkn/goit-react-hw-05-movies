@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocation, useParams, Link } from 'react-router-dom';
 import { getMovieDetails } from 'services/movieAPI';
-import MovieDetailsComponent from 'components/MovieDetailsComponent/MovieDetailsComponent';
+import MovieDetailsComponent from 'components/MovieInfo/MovieInfo';
 import Status from 'services/status';
 import css from './MovieDetails.module.css';
 

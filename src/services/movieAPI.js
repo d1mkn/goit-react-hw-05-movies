@@ -13,7 +13,10 @@ export async function getTrendingMovies() {
       'https://api.themoviedb.org/3/trending/all/day?language=en-US',
       options
     );
-    return await response.json();
+    if (response.ok) {
+      return await response.json();
+    }
+    return Promise.reject(new Error(`There are no trending movies yet.`));
   } catch (err) {
     return console.error(err);
   }
@@ -25,7 +28,10 @@ export async function getMovieDetails(movieId) {
       `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`,
       options
     );
-    return await response.json();
+    if (response.ok) {
+      return await response.json();
+    }
+    return Promise.reject(new Error(`An error occurred during the request.`));
   } catch (err) {
     return console.error(err);
   }
@@ -37,7 +43,12 @@ export async function getMovieCast(movieId) {
       `https://api.themoviedb.org/3/movie/${movieId}/credits?language=en-US&page=1`,
       options
     );
-    return await response.json();
+    if (response.ok) {
+      return await response.json();
+    }
+    return Promise.reject(
+      new Error(`There is no information about the cast of this movie yet.`)
+    );
   } catch (err) {
     return console.error(err);
   }
@@ -49,7 +60,10 @@ export async function getMovieReviews(movieId) {
       `https://api.themoviedb.org/3/movie/${movieId}/reviews?language=en-US&page=1`,
       options
     );
-    return await response.json();
+    if (response.ok) {
+      return await response.json();
+    }
+    return Promise.reject(new Error(`No one has left a review yet.`));
   } catch (err) {
     return console.error(err);
   }
@@ -61,7 +75,12 @@ export async function searchMovieByWord(query) {
       `https://api.themoviedb.org/3/search/movie?query=${query}&include_adult=false&language=en-US&page=1'`,
       options
     );
-    return await response.json();
+    if (response.ok) {
+      return await response.json();
+    }
+    return Promise.reject(
+      new Error(`Movies matching your search were not found.`)
+    );
   } catch (err) {
     return console.error(err);
   }

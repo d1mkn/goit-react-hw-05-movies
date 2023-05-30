@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
-import MoviesPageComponent from 'components/MoviesPageComponent/MoviesPageComponent';
+import MoviesPageComponent from 'components/MoviesForm/MovieForm';
 import Status from 'services/status';
 import { searchMovieByWord } from 'services/movieAPI';
 import MoviesList from 'components/MoviesList/MoviesList';
@@ -11,15 +11,13 @@ const Movies = () => {
   const [error, setError] = useState(null);
   const [status, setStatus] = useState(Status.IDLE);
 
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const queryParams = searchParams.get('query');
 
   const location = useLocation();
 
   useEffect(() => {
-    setQuery(searchParams.get('query'));
-  }, [searchParams]);
-
-  useEffect(() => {
+    queryParams !== null && setQuery(queryParams);
     if (query === '') return;
     setStatus(Status.PENDING);
     searchMovieByWord(query).then(data => {
@@ -31,10 +29,11 @@ const Movies = () => {
       setMovies(data.results);
       setStatus(Status.RESOLVED);
     });
-  }, [query]);
+  }, [query, queryParams]);
 
   const searchMovies = newQuery => {
     if (query === newQuery) return;
+    setSearchParams({ query: newQuery });
     setQuery(newQuery);
     setMovies(null);
     setError(null);

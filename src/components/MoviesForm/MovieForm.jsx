@@ -1,21 +1,16 @@
 import { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
 
 const MoviesPageComponent = ({ onHandleSubmit }) => {
   const [query, setQuery] = useState('');
-  const [searchParams, setSearchParams] = useSearchParams({});
 
   const handleChange = e => {
-    if (e.currentTarget.value === '') {
-      return setSearchParams({});
-    }
+    if (e.currentTarget.value === '') return;
     setQuery(e.currentTarget.value);
   };
 
   const handleSubmit = e => {
     e.preventDefault();
-    setSearchParams({ query: query });
-    setQuery(searchParams.get('query'));
+    if (query === '') return;
     onHandleSubmit(query);
   };
 

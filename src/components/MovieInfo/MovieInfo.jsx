@@ -1,5 +1,5 @@
 import { Link, Outlet } from 'react-router-dom';
-import css from './MovieDetailsComponent.module.css';
+import css from './MovieInfo.module.css';
 
 const MovieDetailsComponent = ({ movie }) => {
   const IMG_BASE = 'https://image.tmdb.org/t/p/original/';

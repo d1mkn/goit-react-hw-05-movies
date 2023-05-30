@@ -6,7 +6,6 @@ import { searchMovieByWord } from 'services/movieAPI';
 import MoviesList from 'components/MoviesList/MoviesList';
 
 const Movies = () => {
-  const [query, setQuery] = useState('');
   const [movies, setMovies] = useState(null);
   const [error, setError] = useState(null);
   const [status, setStatus] = useState(Status.IDLE);
@@ -17,10 +16,9 @@ const Movies = () => {
   const location = useLocation();
 
   useEffect(() => {
-    queryParams !== null && setQuery(queryParams);
-    if (query === '') return;
+    if (!queryParams) return;
     setStatus(Status.PENDING);
-    searchMovieByWord(query).then(data => {
+    searchMovieByWord(queryParams).then(data => {
       if (data.total_results === 0) {
         setError('Movies matching your search were not found.');
         setStatus(Status.REJECTED);
@@ -29,19 +27,20 @@ const Movies = () => {
       setMovies(data.results);
       setStatus(Status.RESOLVED);
     });
-  }, [query, queryParams]);
+  }, [queryParams]);
 
   const searchMovies = newQuery => {
-    if (query === newQuery) return;
+    if (queryParams === newQuery) return;
     setSearchParams({ query: newQuery });
-    setQuery(newQuery);
+
     setMovies(null);
     setError(null);
     setStatus(Status.IDLE);
   };
+
   return (
     <>
-      <MoviesPageComponent onHandleSubmit={searchMovies} value={query} />
+      <MoviesPageComponent onHandleSubmit={searchMovies} />
       {status === Status.REJECTED && <div>{error}</div>}
       {status === Status.RESOLVED && (
         <MoviesList data={movies} location={location} />
